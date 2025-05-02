@@ -37,7 +37,6 @@ def new_store():
 
 @main.route('/new_item', methods=['GET', 'POST'])
 def new_item():
-    # TODO: Create a GroceryItemForm
     form = GroceryItemForm()
 
     if form.validate_on_submit():
