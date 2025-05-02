@@ -39,5 +39,5 @@ class GroceryItemForm(FlaskForm):
         DataRequired(),
         URL(message="Please enter a valid URL.")
     ])
-    store = QuerySelectField("Store", query_factory=lambda: GroceryStore.query.all(), allow_black=False, get_label="title")
+    store = QuerySelectField("Store", query_factory=lambda: GroceryStore.query.all(), allow_blank=False, get_label="title")
     submit = SubmitField("Submit")
