@@ -7,11 +7,6 @@ from grocery_app.models import GroceryStore, ItemCategory
 
 class GroceryStoreForm(FlaskForm):
     """Form for adding/updating a GroceryStore."""
-
-    # TODO: Add the following fields to the form class:
-    # - title - StringField
-    # - address - StringField
-    # - submit button
     title = StringField("Grocery Title", 
         validators=[
             DataRequired(), 
@@ -25,14 +20,6 @@ class GroceryStoreForm(FlaskForm):
 
 class GroceryItemForm(FlaskForm):
     """Form for adding/updating a GroceryItem."""
-
-    # TODO: Add the following fields to the form class:
-    # - name - StringField
-    # - price - FloatField
-    # - category - SelectField (specify the 'choices' param)
-    # - photo_url - StringField
-    # - store - QuerySelectField (specify the `query_factory` param)
-    # - submit button
     name = StringField("Item Name", 
         validators=[
             DataRequired(), 
