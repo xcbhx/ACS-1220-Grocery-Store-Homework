@@ -3,8 +3,8 @@ from datetime import date, datetime
 from grocery_app.models import GroceryStore, GroceryItem
 from grocery_app.forms import GroceryStoreForm, GroceryItemForm
 
-# Import app and db from events_app package so that we can run app
-from grocery_app.extensions import app, db
+# Import from grocery_app package so that we can run app
+from grocery_app.extensions import db
 
 main = Blueprint("main", __name__)
 
@@ -15,7 +15,6 @@ main = Blueprint("main", __name__)
 @main.route('/')
 def homepage():
     all_stores = GroceryStore.query.all()
-    print(all_stores)
     return render_template('home.html', all_stores=all_stores)
 
 @main.route('/new_store', methods=['GET', 'POST'])
