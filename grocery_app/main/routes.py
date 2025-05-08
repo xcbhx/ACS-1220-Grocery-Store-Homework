@@ -15,7 +15,7 @@ main = Blueprint("main", __name__)
 @main.route('/')
 def homepage():
     all_stores = GroceryStore.query.all()
-    return render_template('home.html', all_stores=all_stores)
+    return render_template('main/home.html', all_stores=all_stores)
 
 @main.route('/new_store', methods=['GET', 'POST'])
 def new_store():
@@ -70,7 +70,7 @@ def store_detail(store_id):
         flash("Store details updated successfully.")
         return redirect(url_for("main.store_detail", store_id=store.id))
 
-    return render_template('store_detail.html', store=store, form=form)
+    return render_template('main/store_detail.html', store=store, form=form)
 
 @main.route('/item/<item_id>', methods=['GET', 'POST'])
 def item_detail(item_id):
