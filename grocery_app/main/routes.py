@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, flash
 from datetime import date, datetime
 from grocery_app.models import GroceryStore, GroceryItem
 from grocery_app.forms import GroceryStoreForm, GroceryItemForm
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 # Import from grocery_app package so that we can run app
 from grocery_app.extensions import db
@@ -26,7 +26,8 @@ def new_store():
     if form.validate_on_submit(): 
         new_grocery_store = GroceryStore(
             title=form.title.data,
-            address=form.address.data
+            address=form.address.data,
+            created_by=current_user
         )
         db.session.add(new_grocery_store)
         db.session.commit()
@@ -34,7 +35,7 @@ def new_store():
         flash("New Grocery Store was created successfully.")
         return redirect(url_for("main.store_detail", store_id=new_grocery_store.id))
     
-    return render_template('new_store.html', form=form)
+    return render_template('main/new_store.html', form=form)
 
 @main.route('/new_item', methods=['GET', 'POST'])
 @login_required
@@ -47,15 +48,16 @@ def new_item():
             price=form.price.data,
             category=form.category.data,
             photo_url=form.photo_url.data,
-            store=form.store.data
+            store=form.store.data,
+            created_by=current_user
         )
         db.session.add(new_grocery_item)
         db.session.commit()
-
+        
         flash("New Grocery Item was created successfully.")
         return redirect(url_for("main.item_detail", item_id=new_grocery_item.id))
 
-    return render_template('new_item.html', form=form)
+    return render_template('main/new_item.html', form=form)
 
 @main.route('/store/<store_id>', methods=['GET', 'POST'])
 @login_required
@@ -94,5 +96,5 @@ def item_detail(item_id):
         flash("Item details updated successfully.")
         return redirect(url_for("main.item_detail", item_id=item.id))
 
-    return render_template('item_detail.html', item=item, form=form)
+    return render_template('main/item_detail.html', item=item, form=form)
 
