@@ -2,6 +2,7 @@ from flask import Blueprint, request, render_template, redirect, url_for, flash
 from datetime import date, datetime
 from grocery_app.models import GroceryStore, GroceryItem
 from grocery_app.forms import GroceryStoreForm, GroceryItemForm
+from flask_login import login_required
 
 # Import from grocery_app package so that we can run app
 from grocery_app.extensions import db
@@ -18,6 +19,7 @@ def homepage():
     return render_template('main/home.html', all_stores=all_stores)
 
 @main.route('/new_store', methods=['GET', 'POST'])
+@login_required
 def new_store():
     form = GroceryStoreForm()
 
@@ -35,6 +37,7 @@ def new_store():
     return render_template('new_store.html', form=form)
 
 @main.route('/new_item', methods=['GET', 'POST'])
+@login_required
 def new_item():
     form = GroceryItemForm()
 
@@ -55,6 +58,7 @@ def new_item():
     return render_template('new_item.html', form=form)
 
 @main.route('/store/<store_id>', methods=['GET', 'POST'])
+@login_required
 def store_detail(store_id):
     store = GroceryStore.query.get_or_404(store_id)
     # Pre-populate the form with the existing store
@@ -73,6 +77,7 @@ def store_detail(store_id):
     return render_template('main/store_detail.html', store=store, form=form)
 
 @main.route('/item/<item_id>', methods=['GET', 'POST'])
+@login_required
 def item_detail(item_id):
     item = GroceryItem.query.get_or_404(item_id)
     form = GroceryItemForm(obj=item)
