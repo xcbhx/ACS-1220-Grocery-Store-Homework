@@ -98,3 +98,20 @@ def item_detail(item_id):
 
     return render_template('main/item_detail.html', item=item, form=form)
 
+@main.route('/add_to_shopping_list/<item_id>', methods=['POST'])
+@login_required
+def add_to_shopping_list(item_id):
+    item = GroceryItem.query.get_or_404(item_id)
+
+    if item not in current_user.shopping_list_items:
+        current_user.shopping_list_items.append(item)
+        db.session.commit()
+        flash(f"{item.name} added to your shopping list!")
+
+    return redirect(url_for('main.item_detail', item_id=item.id))
+
+@main.route('/shopping_list')
+@login_required
+def shopping_list():
+    items = current_user.shopping_list_items
+    return render_template('main/shopping_list.html', items=items)

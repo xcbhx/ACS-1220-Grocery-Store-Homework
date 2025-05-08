@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Your Shopping List</h1>
+
+{% if items %}
+    <ul>
+    {% for item in items %}
+        <li>
+            <a href="{{ url_for('main.item_detail', item_id=item.id) }}">{{ item.name }}</a> – 
+            ${{ item.price }} – {{ item.store.title }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Your shopping list is empty!</p>
+{% endif %}
+
+{% endblock %}
