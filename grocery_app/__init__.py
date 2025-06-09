@@ -1,6 +1,9 @@
 from flask import Flask
 from grocery_app.extensions import db, login_manager, bcrypt
-from grocery_app.routes import main
+
+from grocery_app.main.routes import main
+from grocery_app.auth.routes import auth
+
 from grocery_app.config import Config
 from grocery_app.models import User
 
@@ -22,5 +25,6 @@ def create_app():
     return User.query.get(int(user_id))
 
   app.register_blueprint(main)
+  app.register_blueprint(auth)
 
   return app
