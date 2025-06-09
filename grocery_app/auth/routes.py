@@ -27,7 +27,7 @@ def signup():
     return render_template('auth/signup.html', form=form)
 
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -35,11 +35,11 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=True)
             flash("Logged in successfully.")
-            next_page = request.args.get('next')
-            return redirect(next_page if next_page else url_for('main.homepage'))
+            next_page = request.args.get("next")
+            return redirect(next_page if next_page else url_for("main.homepage"))
         else:
             flash("Invalid username or password.")
-    return render_template('auth/login.html', form=form)
+    return render_template("auth/login.html", form=form)
 
 
 @auth.route('/logout')
